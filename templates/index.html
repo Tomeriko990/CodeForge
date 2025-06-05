@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>סביבת קוד</title>
+
+  <!-- Bootstrap RTL -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+
+  <!-- CodeMirror -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/c_style.css') }}">
+  
+  <!-- CSS של Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- JS של Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
+
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- רשימת שאלות -->
+    <div class="col-4 bg-white p-4" id="question-list">
+      <h5 class="mb-3">Questions</h5>
+      <ul class="list-group">
+        <li class="list-group-item question-item" onclick="loadQuestion(0, this)">1. הדפס מספרים מ-1 עד 10</li>
+        <li class="list-group-item question-item" onclick="loadQuestion(1, this)">2. סכום של רשימה</li>
+        <li class="list-group-item question-item" onclick="loadQuestion(2, this)">3. בדיקת ראשוניות</li>
+      </ul>
+    </div>
+
+    <!-- עורך קוד -->
+    <div class="col-8 p-4">
+      <div id="question-display" class="alert alert-light border">בחר שאלה כדי להתחיל</div>
+      <textarea id="editor"></textarea>
+
+      <button class="btn btn-primary mt-3" onclick="runCode()">הרץ קוד</button>
+
+      <div id="result" class="mt-4 alert alert-info" style="display:none;">output</div>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script>
+  const questions = [
+    "כתוב קוד שמדפיס את המספרים מ-1 עד 10",
+    "כתוב פונקציה שמקבלת רשימה של מספרים ומחזירה את הסכום שלהם",
+    "כתוב פונקציה שבודקת אם מספר הוא ראשוני"
+  ];
+
+  const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+    mode: "python",
+    theme: "default",
+    lineNumbers: true,
+  });
+
+  function loadQuestion(index, element) {
+    document.getElementById("question-display").innerText = questions[index];
+    editor.setValue("");
+
+    // מסיר בחירה קודמת
+    document.querySelectorAll(".question-item").forEach(item => item.classList.remove("active"));
+
+    // מסמן את השאלה הנוכחית
+    element.classList.add("active");
+
+    document.getElementById("result").style.display = "none";
+  }
+
+  async function runCode() {
+    const code = editor.getValue();
+    const response = await fetch("/run", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code })
+    });
+
+    const result = await response.json();
+    document.getElementById("result").innerText = result.output;
+    document.getElementById("result").style.display = "block";
+  }
+</script>
+
+</body>
+</html>

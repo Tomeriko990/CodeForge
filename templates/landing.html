@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>!ברוך הבא</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>!ברוך הבא אל האתר </h1>
+    <br>
+    <p>הירשם או התחבר כדי להמשיך</p>
+</header>
+<div class="buttons">
+    <a href="{{ url_for('login') }}">התחבר</a>
+    <a href="{{ url_for('register') }}">הרשם</a>
+</div>
+
+<div id="flash-message-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% set category, message = messages[0] %}
+            <div class="flash-message {{ category }}">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>
+
+
+<footer class="footer">
+    <p>&copy; תמיר חדד אחד המסוכנים בתחום המסכנות</p>
+</footer>
+
+</body>
+</html>

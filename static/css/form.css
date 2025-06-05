@@ -1,0 +1,163 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: hsl(0, 43%, 55%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+h1 {
+    color: #2c3e50;
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.form-container {
+    background-color: rgb(188, 197, 215);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+label {
+    font-size: 1.1rem;
+    color: hsl(209, 90%, 12%);
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    text-align: left;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid hsl(0, 58%, 47%);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #2980b9;
+}
+
+p {
+    font-size: 1.2em;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+#flash-message-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.flash-message {
+    padding: 15px 25px;
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.4s ease-out, fadeOut 1s ease-in 1s forwards;
+    opacity: 0.95;
+}
+
+.flash-message.success {
+    background-color: #2ecc71; /* ירוק */
+}
+.flash-message.info {
+    background-color: hsl(25, 77%, 49%); /* אדום */
+}
+
+.flash-message.danger {
+background-color: #e74c3c; /* אדום */
+}
+
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.buttons a {
+    text-decoration: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 25px;
+    background-color: #3498db;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.buttons a:hover {
+    background-color: #3497da;
+}
+
+.footer {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.9em;
+    color: #95a5a6;
+}
+
+
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 0.95;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+
+        
+
+
+    

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>נחש את המשפט</title>
+    <style>
+        body {
+            direction: rtl;
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #b30000;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .emoji-challenge {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .emoji {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 10px 16px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.95;
+        }
+
+        .hint-button {
+            display: none;
+            margin-top: 15px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .result-message {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: green;
+        }
+
+        .try-again {
+            margin-top: 10px;
+            color: red;
+            font-size: 1.1em;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            background-color: #333;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 999;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .toast .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        a {
+            display: block;
+            margin-top: 40px;
+            text-align: center;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 600px) {
+            .emoji-challenge {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            input[type="text"], button {
+                font-size: 0.95em;
+            }
+
+            .toast {
+                right: 10px;
+                left: 10px;
+                width: auto;
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h1>🎉 נחש את המשפט מהאמוג'י 🎉</h1>
+
+<div class="emoji-challenge">
+    <div class="emoji" id="emoji-display">🍕🍔🍟</div>
+    <input type="text" id="user-input" placeholder="מה המשפט שכתוב כאן?">
+    <br>
+    <button onclick="checkAnswer()">שלח תשובה</button>
+    <div class="result-message" id="result-message"></div>
+    <div class="try-again" id="try-again"></div>
+    <button class="hint-button" id="hint-button" onclick="giveHint()">רמז</button>
+</div>
+
+<a href="/">⬅ חזרה לדף הראשי</a>
+
+<!-- טוסט הודעה -->
+<div class="toast" id="hint-toast">
+    <span id="hint-text">רמז כלשהו</span>
+    <button class="close-btn" onclick="hideHint()">×</button>
+</div>
+
+<script>
+    const challenges = [
+        { emoji: "🙋‍♀️✍️📖🫰🔛📦📦📦 🤔❓👉🧬🎭↔️🍸💊", answer: "הייתי כותבת ספר כותבת עושה עליו ארגזים", hint: "אודיה" },
+        { emoji: "🗣️:🇮🇷🙅🏻‍♂️🔫➡️{🇺🇸+👨🏻‍🦰}🔜🔫🎼", answer: "איראן דונט שוט", hint: "פנינה רוזנבלום" },
+        { emoji: "🏖️🌊🌞", answer: "חוף ים", hint: "מקום חופשה" },
+        { emoji: "🧑‍💻💻", answer: "עבודה מרחוק", hint: "עבודה מהבית" }
+    ];
+
+    let currentChallengeIndex = 0;
+    let attempts = 0;
+
+    function normalize(str) {
+        return str.replace(/\s+/g, ' ').trim(); // מנקה רווחים כפולים או מיותרים
+    }
+
+    function loadChallenge() {
+        const currentChallenge = challenges[currentChallengeIndex];
+        document.getElementById('emoji-display').textContent = currentChallenge.emoji;
+        document.getElementById('user-input').value = '';
+        document.getElementById('result-message').textContent = '';
+        document.getElementById('try-again').textContent = '';
+        document.getElementById('hint-button').style.display = 'none';
+        hideHint();
+    }
+
+    function checkAnswer() {
+        const userInput = normalize(document.getElementById('user-input').value);
+        const correctAnswer = normalize(challenges[currentChallengeIndex].answer);
+        
+        if (userInput === correctAnswer) {
+            alert("ברכות! הסרטן מתקרב בצעדי ענק 🦀");
+            document.getElementById('result-message').textContent = "כל הכבוד! ימסכן!";
+            document.getElementById('try-again').textContent = '';
+            attempts = 0;
+            currentChallengeIndex = (currentChallengeIndex + 1) % challenges.length;
+            setTimeout(loadChallenge, 2000);
+        } else {
+            attempts++;
+            document.getElementById('try-again').textContent = "נסה שנית!";
+            if (attempts >= 3) {
+                document.getElementById('hint-button').style.display = 'inline-block';
+            }
+        }
+    }
+
+    function giveHint() {
+        const currentChallenge = challenges[currentChallengeIndex];
+        document.getElementById('hint-text').textContent = "רמז: " + currentChallenge.hint;
+        document.getElementById('hint-toast').classList.add("show");
+    }
+
+    function hideHint() {
+        document.getElementById('hint-toast').classList.remove("show");
+    }
+
+    loadChallenge();
+</script>
+
+</body>
+</html>
+
+
+
+
+<a href="/">⬅ חזרה לדף הראשי</a>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הסגידה לביבי – ברוך הבא תמיר חדד!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>👑היי תמיר חדד🐑 ברוך הבא לאתר הסגידה שלך לביבי </h1>
+
+    <!-- כפתור ניווט לדף השירים -->
+    <a href="songs">
+        <button class="songs-nav-button">מעבר לדף השירים 🎵</button>
+    </a>
+
+    <a href="hosteges">
+        <button class="hosteges-nav-button">🎗️</button>
+    </a>
+
+    <!-- כפתור ניווט לדף המשחק -->
+    <a href="game">
+        <button class="game-nav-button">מעבר לדף המשחק 🎮</button>
+    </a>
+
+    <!-- כפתור ניווט לדף הנעדרים -->
+    <a href="missing">
+        <button class="missing-nav-button">מעבר לדף הנעדרים 🕵️‍♂️</button>
+    </a>
+
+    <a href="logout">
+        <button class="logout-button">התנתק</button>
+    </a>
+
+    <div id="flash-message-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% set category, message = messages[0] %}
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <button onclick="showSheep()">לחץ כאן כדי לסגוד</button>
+    <br>
+    <div class="container">
+        <img id="sheep" src="{{ url_for('static', filename='assets/bibi.png') }}" alt="כבש">
+        <div id="sheep-caption">אחד הנתינים בתחום הNETINUT</div>
+    </div>
+    <audio id="sound" controls style="margin-top: 20px; display: none;">
+        <source src="{{ url_for('static', filename='assets/sheep-baaing-ftus-1-00-01.mp3') }}" type="audio/mpeg">
+        הדפדפן שלך לא תומך בנגן.
+    </audio>
+
+    <div class="jokes-container">
+        <h2>רשימת מחלות אלימות על תמיר חדד 😈</h2>
+        <button onclick="showJokes()">לחץ כאן לצחוק את הצחוק הנתיני שלך 😅</button>
+        <ul id="jokes-list" style="display:none;">
+            <li>מחלת ניוון שרירים בזין ובתחום ההשכלה</li>
+            <li>מאחל לך שתקבל איידסה</li>
+            <li>מאחל לך תאבולה</li>
+            <li>מאחל לך סרטן האישונים</li>
+        </ul>
+    </div>
+
+    <script>
+        function showSheep() {
+            document.getElementById('sheep').style.display = 'block';
+            document.getElementById('sheep-caption').style.display = 'block';
+            document.getElementById('sound').style.display = 'block';
+            document.getElementById('sound').play();
+            document.getElementById('sheep').style.transform = 'scale(1.1)'; 
+        }
+
+        function showJokes() {
+            document.getElementById('jokes-list').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# קבצים של Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# סביבת עבודה של VS Code
+.vscode/
+
+# קבצי סיסמאות / הגדרות
+instance/
+.env
+
+# תלותים שלא צריך לשים בריפו
+venv/
+env/
+
+# קבצים זמניים
+*.log
+.DS_Store
+
+other/
