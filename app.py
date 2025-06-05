@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import io
 import sys
 import os
+import ast
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # החלף במפתח סודי משלך
@@ -98,17 +99,36 @@ def logout():
 def run_code():
     data = request.get_json()
     code = data.get("code", "")
+    
+    # בדיקה בסיסית לביטחון
+    try:
+        # ננסה לעשות parsing לקוד, בלי להריץ
+        parsed_code = ast.parse(code, mode='exec')
 
+        # נעבור על כל הפקודות ונבדוק שאין import או קריאה ל־exec/eval/open/os וכו׳
+        for node in ast.walk(parsed_code):
+            if isinstance(node, (ast.Import, ast.ImportFrom)):
+                return jsonify({"output": "❌ אסור להשתמש ב-import בקוד הזה."})
+            if isinstance(node, ast.Call):
+                func_name = getattr(node.func, 'id', '') or getattr(node.func, 'attr', '')
+                if func_name in ["exec", "eval", "open", "compile", "input", "os", "subprocess"]:
+                    return jsonify({"output": f"❌ הפונקציה {func_name} חסומה משיקולי אבטחה."})
+
+    except Exception as e:
+        return jsonify({"output": f"שגיאת ניתוח AST: {e}"})
+
+    # אם הקוד עבר את כל הבדיקות, נריץ אותו בזהירות
     output = io.StringIO()
     try:
         sys.stdout = output
-        exec(code, {})  # הרצת הקוד בסביבה מבודדת
+        exec(code, {})  # הרצה בפועל – על אחריותך!
     except Exception as e:
         print("שגיאה:", e)
     finally:
         sys.stdout = sys.__stdout__
 
     return jsonify({"output": output.getvalue()})
+
 
 if __name__ == "__main__":
     # יצירת מסד נתונים אם לא קיים
