@@ -33,7 +33,7 @@ def load_user(user_id):
 def home():
     if current_user.is_authenticated:
         return redirect(url_for('editor'))
-    return redirect(url_for('landing'))
+    return render_template("landing.html")
 
 # עורך הקוד (רק למשתמשים מחוברים)
 @app.route("/ide")
