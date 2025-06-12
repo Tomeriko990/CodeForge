@@ -1,3 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}CodeForge{% endblock %}
+
+{% block content %}
+
 <!DOCTYPE html>
 <html lang="he">
 <head>
@@ -9,7 +15,7 @@
 <body>
 
 <header>
-    <h1>!ברוך הבא אל האתר </h1>
+    <h1>Welcome to CodeForge</h1>
     <br>
     <p>הירשם או התחבר כדי להמשיך</p>
 </header>
@@ -28,6 +34,10 @@
         {% endif %}
     {% endwith %}
 </div>
+
+    
+    <!-- שאר התוכן הקיים של הדף הזה -->
+    {% endblock %}
 
 
 <footer class="footer">
