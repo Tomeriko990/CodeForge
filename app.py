@@ -106,7 +106,7 @@ def login():
 def logout():
     logout_user()
     flash('התנתקת מהמערכת', 'info')
-    return redirect(url_for('landing'))
+    return render_template("landing.html")
 
 # הרצת קוד
 @app.route("/run", methods=["POST"])
