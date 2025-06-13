@@ -1,91 +1,72 @@
-<!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <title>סביבת קוד</title>
+{% extends "base.html" %}
 
+{% block title %}CodeForge – Practice{% endblock %}
+
+{% block style %}
+  {{ super() }}
   <!-- Bootstrap RTL -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
 
   <!-- CodeMirror -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/c_style.css') }}">
-  
-  <!-- CSS של Bootstrap -->
+
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- JS של Bootstrap -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
-
-</head>
-<body>
+{% block content %}
+<div class="text-end p-3">
+  <button id="theme-toggle" class="btn btn-outline-light">🌙 Dark Mode</button>
+</div>
 
 <div class="container-fluid">
   <div class="row">
-    <!-- רשימת שאלות -->
-    <div class="col-4 bg-white p-4" id="question-list">
-      <h5 class="mb-3">Questions</h5>
-      <ul class="list-group">
-        <li class="list-group-item question-item" onclick="loadQuestion(0, this)">1. הדפס מספרים מ-1 עד 10</li>
-        <li class="list-group-item question-item" onclick="loadQuestion(1, this)">2. סכום של רשימה</li>
-        <li class="list-group-item question-item" onclick="loadQuestion(2, this)">3. בדיקת ראשוניות</li>
-      </ul>
+    <!-- Sidebar: Question List -->
+    <div class="col-lg-4 col-md-5 p-4" id="question-list">
+      <h4 class="mb-3 text-primary fw-bold">Code Questions</h4>
+
+      <div class="mb-4">
+        <h6 class="text-success">Easy</h6>
+        <div class="question-item" onclick="loadQuestion(0, this)">1. Print numbers from 1 to 10</div>
+        <div class="question-item" onclick="loadQuestion(1, this)">2. Sum of a list</div>
+      </div>
+
+      <div class="mb-4">
+        <h6 class="text-warning">Medium</h6>
+        <div class="question-item" onclick="loadQuestion(2, this)">3. Check if a number is prime</div>
+        <div class="question-item" onclick="loadQuestion(3, this)">4. Reverse a string</div>
+        <div class="question-item" onclick="loadQuestion(4, this)">5. Count vowels in a string</div>
+      </div>
+
+      <div>
+        <h6 class="text-danger">Hard</h6>
+        <div class="question-item" onclick="loadQuestion(5, this)">6. Find all prime numbers up to N</div>
+        <div class="question-item" onclick="loadQuestion(6, this)">7. FizzBuzz challenge</div>
+        <div class="question-item" onclick="loadQuestion(7, this)">8. Check if string is palindrome</div>
+      </div>
     </div>
 
-    <!-- עורך קוד -->
-    <div class="col-8 p-4">
-      <div id="question-display" class="alert alert-light border">בחר שאלה כדי להתחיל</div>
+    <!-- Main: Code Editor -->
+    <div class="col-lg-8 col-md-7 p-4">
+      <div id="question-display" class="alert alert-light border">Select a question to begin</div>
       <textarea id="editor"></textarea>
-
-      <button class="btn btn-primary mt-3" onclick="runCode()">הרץ קוד</button>
-
+      <button class="btn btn-primary mt-3" onclick="runCode()">Run Code</button>
       <div id="result" class="mt-4 alert alert-info" style="display:none;">output</div>
     </div>
   </div>
 </div>
+{% endblock %}
 
-<!-- JS -->
-<script>
-  const questions = [
-    "כתוב קוד שמדפיס את המספרים מ-1 עד 10",
-    "כתוב פונקציה שמקבלת רשימה של מספרים ומחזירה את הסכום שלהם",
-    "כתוב פונקציה שבודקת אם מספר הוא ראשוני"
-  ];
+{% block script %}
+  {{ super() }}
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  const editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-    mode: "python",
-    theme: "default",
-    lineNumbers: true,
-  });
+  <!-- CodeMirror -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/python/python.min.js"></script>
 
-  function loadQuestion(index, element) {
-    document.getElementById("question-display").innerText = questions[index];
-    editor.setValue("");
-
-    // מסיר בחירה קודמת
-    document.querySelectorAll(".question-item").forEach(item => item.classList.remove("active"));
-
-    // מסמן את השאלה הנוכחית
-    element.classList.add("active");
-
-    document.getElementById("result").style.display = "none";
-  }
-
-  async function runCode() {
-    const code = editor.getValue();
-    const response = await fetch("/run", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code })
-    });
-
-    const result = await response.json();
-    document.getElementById("result").innerText = result.output;
-    document.getElementById("result").style.display = "block";
-  }
-</script>
-
-</body>
-</html>
+  <!-- Custom JS -->
+  <script src="{{ url_for('static', filename='js/exercise.js') }}"></script>
+{% endblock %}

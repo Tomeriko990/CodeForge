@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}CodeForge – Home{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+
+    <h1 class="fw-bold mb-2 text-primary">Welcome {{ current_user.username }}</h1>
+    <p class="lead text-light mb-5">Ready to sharpen your skills?</p>
+
+    <section class="px-3" style="max-width: 700px; margin: auto;">
+        <h3 class="text-info fw-semibold mb-3">About CodeForge</h3>
+        <p class="text-light fs-6">
+            CodeForge is a modern, browser-based coding platform designed for both aspiring and experienced developers.
+            Practice solving challenges, sharpen your algorithmic thinking, and run Python code in real-time using our in-browser editor.
+            Whether you're logged in or just exploring as a guest – CodeForge is your space to grow.
+        </p>
+    </section>
+</div>
+{% endblock %}

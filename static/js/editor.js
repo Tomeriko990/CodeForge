@@ -1,6 +1,15 @@
 let editor;
 let openedFiles = {};
 document.addEventListener("DOMContentLoaded", () => {
+  
+    lucide.createIcons({
+        attrs: {
+        width: 36,
+        height: 36,
+        stroke: '#ccc',
+        'stroke-width': 1.5
+        }
+    });   
       const explorerBtn = document.querySelector('button[title="Explorer"]');
       const searchBtn = document.querySelector('button[title="Search"]');
       const terminalBtn = document.querySelector('button[title="Terminal"]');

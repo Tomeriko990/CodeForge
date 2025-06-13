@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,58 +7,56 @@
     <title>Register</title>
 </head>
 <body>
-    <div id="flash-message-container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% set category, message = messages[0] %}
-                <div class="flash-message {{ category }}">
-                    {{ message }}
-                </div>
-            {% endif %}
-        {% endwith %}
-    </div>
-    
 
-    <div class="form-container">
-        <h2>Sign up</h2>
-        <form name="sign-up-form" onsubmit="check_validation(event)" action="/register" method="POST">
+<div id="flash-message-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% set category, message = messages[0] %}
+            <div class="flash-message {{ category }}">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endwith %}
+</div>
 
-            <label for="username">User Name:</label>
-            <input type="text" name="username" required>
+<div class="form-container">
+    <h2>Sign Up</h2>
+    <form name="sign-up-form" onsubmit="check_validation(event)" action="/register" method="POST">
 
-            <label for="password">Password:</label>
-            <input type="password" name="password" required>
+        <label for="username">User Name:</label>
+        <input type="text" name="username" required>
 
-            <label for="confirm_password">Confirm password:</label>
-            <input type="password" name="confirm_password" required>
-            <p id="output" style="color: hsl(33, 62%, 46%);"></p>
+        <label for="password">Password:</label>
+        <input type="password" name="password" required>
 
-            <button type="submit">Submit</button>
-        </form>
-        <p>?כבר רשום <a href="{{ url_for('login') }}">התחבר כאן</a></p>
-    </div>
-    <script> 
-       async function check_validation(event) {
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" name="confirm_password" required>
+        <p id="output" style="color: hsl(33, 62%, 46%);"></p>
+
+        <button type="submit">Submit</button>
+    </form>
+    <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2025 CodeForge – Practice, Learn, and Forge Your Coding Skills</p>
+</footer>
+
+<script>
+   async function check_validation(event) {
         const form = document.forms["sign-up-form"];
-        const username=form["username"].value;
+        const username = form["username"].value;
         const password = form["password"].value;
         const confirm_password = form["confirm_password"].value;
-        const response = await fetch("/validate", {
-        method: "POST",
-        body: { username }
-    });
 
         if (password !== confirm_password) {
-            event.preventDefault(); // רק אם יש טעות — נעצור שליחה
-            document.getElementById("output").innerHTML = "password and confirm password unmatched";
+            event.preventDefault();
+            document.getElementById("output").innerHTML = "Password and confirm password do not match.";
             return false;
         }
+        return true;
+    }
+</script>
 
-        return true; // שליחה רגילה תמשיך
-      }   
-        
-
-        
-    </script>
 </body>
 </html>

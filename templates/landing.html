@@ -1,27 +1,25 @@
-{% extends 'base.html' %}
-
-{% block title %}CodeForge{% endblock %}
-
-{% block content %}
-
 <!DOCTYPE html>
 <html lang="he">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>!ברוך הבא</title>
+    <title>CodeForge</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
 </head>
 <body>
 
 <header>
     <h1>Welcome to CodeForge</h1>
-    <br>
-    <p>הירשם או התחבר כדי להמשיך</p>
+    <p>Please sign in or register to continue</p>
 </header>
 <div class="buttons">
-    <a href="{{ url_for('login') }}">התחבר</a>
-    <a href="{{ url_for('register') }}">הרשם</a>
+    <div>
+        <a href="{{ url_for('login') }}">Sign In</a>
+        <a href="{{ url_for('register') }}">Sign Up</a>
+    </div>
+    <div>
+        <a href="{{ url_for('home') }}">Continue as Guest</a>
+    </div>
 </div>
 
 <div id="flash-message-container">
@@ -35,14 +33,8 @@
     {% endwith %}
 </div>
 
-    
-    <!-- שאר התוכן הקיים של הדף הזה -->
-    {% endblock %}
-
-
 <footer class="footer">
-    <p>&copy; תמיר חדד אחד המסוכנים בתחום המסכנות</p>
+    <p>&copy; 2025 CodeForge – Practice, Learn, and Forge Your Coding Skills</p>
 </footer>
-
 </body>
 </html>

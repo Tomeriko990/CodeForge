@@ -1,55 +1,52 @@
-<!-- templates/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-    <title>{% block title %}CodeForge{% endblock %}</title>
-    {% block style %}
-    {% endblock %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}CodeForge{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  {% block style %}{% endblock %}
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-    {% if current_user.is_authenticated %}
-    <nav class="navbar">
-        <ul>
-            <li><a title="Home Page" href="{{ url_for('home') }}"><i data-lucide="house"></i></a></li>
-            <li><a title="Exercises Page" href="{{ url_for('exercises') }}"><i data-lucide="library-big"></i></a></li>
-            <li><a title="Profile Page" href="Profile"><i data-lucide="square-user-round"></i>{{ current_user.username }}</a></li>
-            <li><a title="Logout" href="{{ url_for('logout') }}"><i data-lucide="log-out"></i></a></li>
-        </ul>
-    </nav>
-    {% else %}
-    <nav class="navbar">
-        <ul>
-            <li><a title="Login" href="{{ url_for('login') }}"><i data-lucide="log-in"></i> Sign-in</a></li>
-            <li><a title="Register" href="{{ url_for('register') }}"><i data-lucide="user-plus"></i> Sign-up</a></li>
-        
-        </ul>
-    </nav> 
-    {% endif %}   
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
 
-    <footer>
-        <p class="footer">&copy;2025 CodeForge. All rights reserved.</p>
-    </footer>
-    {% block script %}
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            lucide.createIcons({
-                attrs: {
-                width: 36,
-                height: 36,
-                stroke: '#ccc',
-                'stroke-width': 1.5
-                }
-            });
-        })    
-    </script>
-    {% endblock %}
+  {% if current_user.is_authenticated %}
+  <nav class="navbar">
+    <ul>
+      <li><a href="{{ url_for('home') }}" title="Home"><i data-lucide="home"></i>Home</a></li>
+      <li><a href="{{ url_for('exercises') }}" title="Exercises"><i data-lucide="library-big"></i> Exercises</a></li>
+      <li><a href="{{ url_for('editor') }}" title="Editor"><i data-lucide="terminal"></i> Editor</a></li>
+      <li><a href="#" title="Profile"><i data-lucide="user-circle"></i> {{ current_user.username }}</a></li>
+      <li><a href="{{ url_for('logout') }}" title="Logout"><i data-lucide="log-out"></i>Logout</a></li>
+    </ul>
+  </nav>
+  {% else %}
+  <nav class="navbar">
+    <ul>
+      <li><a href="{{ url_for('login') }}"><i data-lucide="log-in"></i> Sign-in</a></li>
+      <li><a href="{{ url_for('register') }}"><i data-lucide="user-plus"></i> Sign-up</a></li>
+      <li><a href="{{ url_for('exercises') }}"><i data-lucide="library-big"></i> Exercises</a></li>
+      <li><a href="{{ url_for('editor') }}"><i data-lucide="terminal"></i> Editor</a></li>
+    </ul>
+  </nav>
+  {% endif %}
+
+  <main class="page-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p class="footer">&copy;2025 CodeForge. All rights reserved.</p>
+  </footer>
+
+  {% block script %}
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons({
+        attrs: { width: 22, height: 22, stroke: "#ccc", "stroke-width": 1.5 },
+      });
+    });
+  </script>
+  {% endblock %}
 </body>
 </html>

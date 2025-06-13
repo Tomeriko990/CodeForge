@@ -1,60 +1,84 @@
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom, #1f1f1f, #3c3c3c);
     margin: 0;
-    padding: 0;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
+    min-height: 100vh;
+    color: #f0f0f0;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 header {
-    text-align: center;
-    margin-bottom: 30px;
+    position:absolute;
+    top:150px;
+    margin-bottom: 80px;
+    padding: 0 20px;
 }
 
 h1 {
-    color: #2c3e50;
-    font-size: 3em;
+    color: #3498db;
+    font-size: 2.8em;
     margin-bottom: 10px;
 }
 
 p {
     font-size: 1.2em;
-    color: #7f8c8d;
-    margin-bottom: 20px;
+    color: #ccc;
+    margin-bottom: 30px;
 }
 
 .buttons {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 20px;
 }
 
 .buttons a {
     text-decoration: none;
     padding: 15px 30px;
-    font-size: 1.2em;
-    border-radius: 25px;
+    font-size: 1.1em;
+    border-radius: 30px;
     background-color: #3498db;
     color: white;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    min-width: 140px;
+    text-align: center;
 }
 
 .buttons a:hover {
     background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.buttons a:nth-child(3) {
+    background-color: transparent;
+    border: 2px solid #3498db;
+    color: #3498db;
+}
+
+.buttons a:nth-child(3):hover {
+    background-color: #3498db;
+    color: white;
 }
 
 .footer {
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
+    margin-top: 40px;
     font-size: 0.9em;
-    color: #95a5a6;
+    color: #aaa;
+    text-align: center;
 }
 
-
+/* Flash messages */
 #flash-message-container {
     position: fixed;
     top: 20px;
@@ -73,15 +97,15 @@ p {
 }
 
 .flash-message.success {
-    background-color: #2ecc71; /* ירוק */
+    background-color: #2ecc71;
 }
 
 .flash-message.info {
-background-color: hsl(25, 77%, 49%); /* אדום */
+    background-color: #f39c12;
 }
 
 .flash-message.danger {
-background-color: hsl(6, 91%, 50%); /* אדום */
+    background-color: #e74c3c;
 }
 
 @keyframes slideDown {
@@ -99,5 +123,36 @@ background-color: hsl(6, 91%, 50%); /* אדום */
     to {
         opacity: 0;
         transform: translateY(-20px);
+    }
+}
+
+/* responsive */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2.2em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .buttons a {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .footer {
+        font-size: 0.8em;
+    }
+
+    #flash-message-container {
+        left: 20px;
+        right: 20px;
+        top: 10px;
     }
 }
