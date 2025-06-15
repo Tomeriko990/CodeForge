@@ -1,17 +1,25 @@
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  height: 100%;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(to bottom, #1e1e1e, #2c2c2c);
   color: #f0f0f0;
 }
 
+#layout-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .navbar {
+  height: 50px;
   width: 100%;
   background-color: #1e1e1e;
   border-bottom: 1px solid #333;
   display: flex;
   justify-content: center;
-  justify-content: space-between;
   align-items: center;
   padding: 12px 24px;
   position: sticky;
@@ -53,19 +61,18 @@ body {
   text-decoration: none;
 }
 
-main {
-  padding: 20px;
+#page-content {
+  flex: 1;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  height: 100%;
 }
 
 footer {
+  flex-shrink: 0;
   text-align: center;
   font-size: 0.9em;
   color: #aaa;
-  margin-top: 50px;
-  padding-bottom: 30px;
-}
-.page-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  padding: 10px 0;
 }

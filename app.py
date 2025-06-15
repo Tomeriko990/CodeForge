@@ -12,11 +12,6 @@ app.secret_key = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 db.init_app(app)
 
-# Guest support
-class Guest(AnonymousUserMixin):
-    def __init__(self):
-        self.username = "Guest"
-        self.is_guest = True
 
 # Flask-Login setup
 login_manager = LoginManager()
@@ -31,6 +26,12 @@ def load_user(user_id):
 @app.route("/")
 def root():
     return render_template("landing.html")
+
+# Profile page
+@login_required
+@app.route("/profile")
+def profile():
+    return render_template("profile.html")
 
 @app.route("/landing")
 def landing():

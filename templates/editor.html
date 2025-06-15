@@ -1,49 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>CodeForge IDE</title>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Monaco -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
-  <!-- Lucide -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/editor.css') }}">
-</head>
-<body>
-<nav class="navbar">
-    <ul>
-        <li><a title="Home Page" href="{{ url_for('home') }}"><i data-lucide="house"></i></a></li>
-        <li><a title="Exercises Page" href="{{ url_for('exercises') }}"><i data-lucide="library-big"></i></a></li>
-        <li><a title="Profile Page" href="Profile"><i data-lucide="square-user-round"></i></a></li>
-        <li><a title="Logout" href="{{ url_for('logout') }}"><i data-lucide="log-out"></i></a></li>
-    </ul>
-</nav>    
+{% extends "base.html" %}
 
+{% block title %}CodeForge – IDE{% endblock %}
+
+{% block head_scripts %}
+  {{ super() }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs/loader.min.js"></script>
+{% endblock %}
+
+{% block style %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/editor.css') }}">
+{% endblock %}
+
+{% block content %}
 <div id="ide-container">
-  <!-- סרגל צד -->
   <div id="sidebar">
-    <button title="Explorer" class="active" ><i data-lucide="files"></i></button>
+    <button title="Explorer" class="active"><i data-lucide="files"></i></button>
     <button title="Search"><i data-lucide="search"></i></button>
     <button title="Run" onclick="runCode()"><i data-lucide="play"></i></button>
     <button title="Terminal"><i data-lucide="terminal"></i></button>
     <button title="Settings"><i data-lucide="settings"></i></button>
-    
   </div>
+
   <div id="explorer-container">
-    <h4>Explorer
-        <br>
-        <span>        
-            <input type="file" id="fileLoader" style="display: block;" />  
-        </span>
-    </h4>
-    <div id="file-list">
-        
+    <div id="explorer-header">
+      <h4>Explorer</h4>
+      <span>
+        <button id="fileLoader">Add file</button>
+        <input type="file" id="hiddenFileInput" style="display: none;">
+      </span>
     </div>
+    <div id="file-list"></div>
   </div>
-  <!-- אזור עורך -->
-  
-  
-    <div id="main-area">
+
+  <div id="main-area">
     <div id="panel-search" class="side-panel">🔍 Search bar (coming soon...)</div>
     <div id="settings-modal" class="modal" style="display: none;">
       <div class="modal-content">
@@ -54,13 +44,17 @@
     </div>
 
     <div id="toolbar">
-      <span id="file-name">CodeForge </span>
+      <span id="file-name">CodeForge</span>
       <button id="run-button" onclick="runCode()"><i data-lucide="play"></i></button>
     </div>
+
     <div id="editor"></div>
     <div id="bottom-bar">// Output will appear here...</div>
   </div>
 </div>
-<script src="{{ url_for('static', filename='js/editor.js') }}"></script>
-</body>
-</html>
+{% endblock %}
+
+{% block script %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+{% endblock %}

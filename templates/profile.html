@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}CodeForge – Profile{% endblock %}
+
+{% block style %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+<div class="profile-container">
+  <div class="profile-header">
+    <h2>{{ current_user.username }}</h2>
+    <p>Status: Logged In</p>
+  </div>
+
+  <div class="profile-box-row">
+    <div class="profile-box">
+      <div>📅 Joined</div>
+      <div>{{ current_user.created_at.strftime('%Y-%m-%d') if current_user.created_at else 'N/A' }}</div>
+    </div>
+    <div class="profile-box">
+      <div>📧 Email</div>
+      <div>{{ current_user.email if current_user.email else 'Not Provided' }}</div>
+    </div>
+    <div class="profile-box">
+      <div>✅ Exercises Completed</div>
+      <div>{{ current_user.completed_exercises|default(0) }}</div>
+    </div>
+    <div class="profile-box">
+      <div>🎨 Theme</div>
+      <div id="theme-status">Dark</div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="not-logged">
+  <h3>You must be logged in to view this page.</h3>
+  <a href="{{ url_for('login') }}" class="btn btn-primary mt-3">Sign In</a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block script %}
+{{ super() }}
+  const theme = localStorage.getItem("theme");
+  if (theme === "light") {
+    document.getElementById("theme-status").innerText = "Light";
+  }
+{% endblock %}

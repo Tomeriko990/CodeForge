@@ -15,12 +15,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const terminalBtn = document.querySelector('button[title="Terminal"]');
       const settingsBtn = document.querySelector('button[title="Settings"]');
       
+
+      const fileInput = document.getElementById("hiddenFileInput");
+
       const explorerPanel = document.getElementById("explorer-container");
       const searchPanel = document.getElementById("panel-search");
       const terminal = document.getElementById("bottom-bar");
       const settingsModal = document.getElementById("settings-modal");
       const fileLoader=document.getElementById("fileLoader");
   
+      fileLoader.addEventListener("click", () => {
+        fileInput.click(); 
+      });
+
       explorerBtn.addEventListener("click", () => {
         searchPanel.style.display = "none";
         explorerPanel.style.display = explorerPanel.style.display === "none" ? "block" : "none";
@@ -41,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         settingsModal.style.display = "block";
       });
       
-      fileLoader.addEventListener("change",(e)=>{
+      fileInput.addEventListener("change",(e)=>{
         const file = e.target.files[0];
         if (!file) return;
 

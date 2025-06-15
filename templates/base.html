@@ -6,38 +6,41 @@
   <title>{% block title %}CodeForge{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
   {% block style %}{% endblock %}
-  <script src="https://unpkg.com/lucide@latest"></script>
+  {% block head_scripts %}
+    <script src="https://unpkg.com/lucide@latest"></script>
+  {% endblock %}
 </head>
 <body>
+  <div id="layout-root">
+    {% if current_user.is_authenticated %}
+    <nav class="navbar">
+      <ul>
+        <li><a href="{{ url_for('home') }}" title="Home"><i data-lucide="home"></i>Home</a></li>
+        <li><a href="{{ url_for('exercises') }}" title="Exercises"><i data-lucide="library-big"></i> Exercises</a></li>
+        <li><a href="{{ url_for('editor') }}" title="Editor"><i data-lucide="terminal"></i> Editor</a></li>
+        <li><a href="{{ url_for('profile') }}" title="Profile"><i data-lucide="user-circle"></i> {{ current_user.username }}</a></li>
+        <li><a href="{{ url_for('logout') }}" title="Logout"><i data-lucide="log-out"></i>Logout</a></li>
+      </ul>
+    </nav>
+    {% else %}
+    <nav class="navbar">
+      <ul>
+        <li><a href="{{ url_for('login') }}"><i data-lucide="log-in"></i> Sign-in</a></li>
+        <li><a href="{{ url_for('register') }}"><i data-lucide="user-plus"></i> Sign-up</a></li>
+        <li><a href="{{ url_for('exercises') }}"><i data-lucide="library-big"></i> Exercises</a></li>
+        <li><a href="{{ url_for('editor') }}"><i data-lucide="terminal"></i> Editor</a></li>
+      </ul>
+    </nav>
+    {% endif %}
 
-  {% if current_user.is_authenticated %}
-  <nav class="navbar">
-    <ul>
-      <li><a href="{{ url_for('home') }}" title="Home"><i data-lucide="home"></i>Home</a></li>
-      <li><a href="{{ url_for('exercises') }}" title="Exercises"><i data-lucide="library-big"></i> Exercises</a></li>
-      <li><a href="{{ url_for('editor') }}" title="Editor"><i data-lucide="terminal"></i> Editor</a></li>
-      <li><a href="#" title="Profile"><i data-lucide="user-circle"></i> {{ current_user.username }}</a></li>
-      <li><a href="{{ url_for('logout') }}" title="Logout"><i data-lucide="log-out"></i>Logout</a></li>
-    </ul>
-  </nav>
-  {% else %}
-  <nav class="navbar">
-    <ul>
-      <li><a href="{{ url_for('login') }}"><i data-lucide="log-in"></i> Sign-in</a></li>
-      <li><a href="{{ url_for('register') }}"><i data-lucide="user-plus"></i> Sign-up</a></li>
-      <li><a href="{{ url_for('exercises') }}"><i data-lucide="library-big"></i> Exercises</a></li>
-      <li><a href="{{ url_for('editor') }}"><i data-lucide="terminal"></i> Editor</a></li>
-    </ul>
-  </nav>
-  {% endif %}
+    <main id="page-content">
+      {% block content %}{% endblock %}
+    </main>
 
-  <main class="page-content">
-    {% block content %}{% endblock %}
-  </main>
-
-  <footer>
-    <p class="footer">&copy;2025 CodeForge. All rights reserved.</p>
-  </footer>
+    <footer>
+      <p class="footer">&copy;2025 CodeForge. All rights reserved.</p>
+    </footer>
+  </div>
 
   {% block script %}
   <script>
