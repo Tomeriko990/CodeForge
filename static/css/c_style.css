@@ -23,6 +23,8 @@ body {
   border-radius: 5px;
   padding: 10px 15px;
   transition: all 0.2s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .question-item:hover {
@@ -37,7 +39,7 @@ body {
 }
 
 .CodeMirror {
-  height: 450px;
+  height: 350px;
   border: 1px solid #3c3c3c;
   border-radius: 5px;
   font-size: 16px;
@@ -126,32 +128,54 @@ body.light-mode #result {
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
-  #question-list {
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid #444;
-  }
-
   .row {
     flex-direction: column;
   }
 
+  #question-list {
+    width: 100%;
+    height: auto;
+    padding: 16px;
+    border-right: none;
+    border-bottom: 1px solid #444;
+  }
+
+  .col-md-5, .col-md-7, .col-lg-4, .col-lg-8 {
+    width: 100% !important;
+    max-width: 100%;
+    padding: 16px;
+  }
+
   .CodeMirror {
     font-size: 15px;
-    height: 300px;
+    height: 240px;
+    width: 100%;
   }
 
   #question-display {
     font-size: 1rem;
+    margin-bottom: 16px;
   }
 
   #result {
     font-size: 0.95rem;
+    margin-top: 20px;
   }
 
   button.btn-primary {
     width: 100%;
     padding: 12px;
     font-size: 1.05rem;
+    margin-top: 16px;
+  }
+
+  .question-item {
+    font-size: 0.95rem;
+    padding: 10px 12px;
+  }
+
+  #theme-toggle {
+    width: 100%;
+    margin-bottom: 10px;
   }
 }
