@@ -71,15 +71,34 @@
   }
   
   @media (max-width: 768px) {
-    .features {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .quick-actions a {
-      width: 100%;
-      max-width: 280px;
-      text-align: center;
-    }
+  .home-container h1 {
+    font-size: 2em;
   }
+
+  .intro {
+    font-size: 1em;
+  }
+
+  .features {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature-box {
+    width: 90%;
+  }
+
+  .quick-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .quick-actions a {
+    width: 90%;
+    max-width: 320px;
+    text-align: center;
+  }
+}
+    
+  
   
