@@ -200,5 +200,20 @@ a:hover {
         transform: translateY(-20px);
     }
 }
+@media (max-width: 600px) {
+  .form-container {
+    width: 100%;
+    border-radius: 0; /* אין מקום לרדיוס בצד ימין רק */
+    height: auto; /* אל תכפה 100vh כי במובייל זה לפעמים יחתוך */
+    padding: 20px;
+  }
 
+  h1 {
+    font-size: 2em;
+  }
+
+  form {
+    width: 100%;
+  }
+}
 
