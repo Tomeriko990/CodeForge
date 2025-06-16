@@ -4,13 +4,14 @@
     --base-color:#ffffff;
     --text-color:hsl(300, 10%, 15%);
     --input-color:rgb(226, 215, 226);
-
+    --col-background-color:  linear-gradient(to bottom, hsla(0, 13%, 81%, 0.167), hsl(0, 0%, 100%));
+}
 
 *{
     margin: 0;
     padding: 0;
 }
-}
+
 html{
     font-family: Poppins,'Segoe UI',sans-serif;
     font-size: 12pt;
@@ -25,7 +26,7 @@ body {
 }
 .form-container{
     box-sizing: border-box;
-    background-color: var(--base-color);
+    background: var(--col-background-color);
     height: 100vh;
     width: max(40%,600px);
     padding: 10px;
@@ -39,7 +40,7 @@ body {
 
 h1 {
     margin-bottom: 20px;
-    color: #2c3e50;
+    color: var(--accent-color);
     font-size: 3em;
     font-weight: 900;
     text-transform: uppercase;

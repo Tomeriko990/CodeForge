@@ -1,3 +1,4 @@
+
 .home-container {
     padding: 40px 20px;
     max-width: 1000px;
@@ -53,6 +54,8 @@
     gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
   }
   
   .quick-actions a {
@@ -63,6 +66,7 @@
     text-decoration: none;
     font-weight: 500;
     transition: background-color 0.3s, transform 0.2s;
+    text-align: center;
   }
   
   .quick-actions a:hover {
@@ -70,10 +74,23 @@
     transform: translateY(-2px);
   }
   
-  @media (max-width: 768px) {
-  .home-container h1 {
-    font-size: 2em;
+@media (max-width: 768px) {
+
+  .features {
+      flex-direction: column;
+      align-items: center;
   }
+  
+  .quick-actions {
+      flex-direction: column;
+      align-items: center;
+  }
+  
+  .quick-actions a {
+      width: 90%;
+      max-width: 300px;
+  }
+  
 
   .intro {
     font-size: 1em;

@@ -1,3 +1,8 @@
+body{
+  background-image: url(../assets/background-form.jpg);
+  background-size: cover;
+}
+
 .landing-container {
     display: flex;
     flex-direction: column;
@@ -21,7 +26,7 @@
   }
   
   .landing-container h1 span {
-    color: #3498db;
+    color: var(--accent-color)
   }
   
   .landing-container p {
@@ -49,16 +54,16 @@
   }
   
   .landing-buttons a.signin {
-    background-color: #3498db;
+    background-color: var(--accent-color);
     color: white;
   }
   
   .landing-buttons a.signin:hover {
-    background-color: #2980b9;
+    background-color: #27ae60;
   }
   
   .landing-buttons a.signup {
-    background-color: #2ecc71;
+    background-color: var(--accent-color);
     color: white;
   }
   
@@ -68,12 +73,12 @@
   
   .landing-buttons a.guest {
     background-color: transparent;
-    border: 2px solid #3498db;
-    color: #3498db;
+    border: 2px solid var(--accent-color);
+    color: white;
   }
   
   .landing-buttons a.guest:hover {
-    background-color: #3498db;
+    background-color: var(--accent-color);
     color: white;
   }
   
