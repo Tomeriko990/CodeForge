@@ -124,3 +124,46 @@
 .file-item:hover {
   background-color: #2a2d2e;
 }
+
+/* כפתור ☰ */
+#sidebar-toggle {
+  background: none;
+  border: none;
+  color: #f0f0f0;
+  font-size: 22px;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #sidebar-toggle {
+    display: block;
+  }
+
+  .navbar ul {
+    gap: 20px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  #explorer-container {
+    display: none;
+    position: fixed;
+    top: 50px; /* מתחת ל-navbar */
+    left: 0;
+    width: 70%;
+    height: calc(100% - 50px);
+    background-color: #1e1e1e;
+    z-index: 999;
+    flex-direction: column;
+  }
+
+  #explorer-container.open {
+    display: flex;
+  }
+}
+
