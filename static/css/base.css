@@ -76,3 +76,21 @@ footer {
   color: #aaa;
   padding: 10px 0;
 }
+
+
+/* רספונסיביות לפלאפונים */
+@media (max-width: 600px) {
+  .navbar ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navbar {
+    padding: 10px;
+  }
+
+  .navbar a {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
