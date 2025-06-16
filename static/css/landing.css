@@ -1,158 +1,95 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to bottom, #1f1f1f, #3c3c3c);
-    margin: 0;
-    padding: 20px;
+.landing-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    justify-content: center;
     min-height: 100vh;
-    color: #f0f0f0;
     text-align: center;
-    box-sizing: border-box;
-}
-
-header {
-    position:absolute;
-    top:150px;
-    margin-bottom: 80px;
     padding: 0 20px;
-}
-
-h1 {
+  }
+  #page-content {
+    display: block !important;
+    height: auto !important;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .landing-container h1 {
+    font-size: 3.5em;
+    color: #fff;
+    margin-bottom: 0.3em;
+  }
+  
+  .landing-container h1 span {
     color: #3498db;
-    font-size: 2.8em;
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 1.2em;
-    color: #ccc;
-    margin-bottom: 30px;
-}
-
-.buttons {
+  }
+  
+  .landing-container p {
+    font-size: 1.3em;
+    color: #bbb;
+    margin-bottom: 2.5em;
+    max-width: 600px;
+  }
+  
+  .landing-buttons {
     display: flex;
-    gap: 20px;
     flex-wrap: wrap;
+    gap: 20px;
     justify-content: center;
-    padding: 0 20px;
-}
-
-.buttons a {
+    margin-bottom: 30px;
+  }
+  
+  .landing-buttons a {
     text-decoration: none;
-    padding: 15px 30px;
+    padding: 15px 35px;
     font-size: 1.1em;
     border-radius: 30px;
+    transition: 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .landing-buttons a.signin {
     background-color: #3498db;
     color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    min-width: 140px;
-    text-align: center;
-}
-
-.buttons a:hover {
+  }
+  
+  .landing-buttons a.signin:hover {
     background-color: #2980b9;
-    transform: translateY(-2px);
-}
-
-.buttons a:nth-child(3) {
+  }
+  
+  .landing-buttons a.signup {
+    background-color: #2ecc71;
+    color: white;
+  }
+  
+  .landing-buttons a.signup:hover {
+    background-color: #27ae60;
+  }
+  
+  .landing-buttons a.guest {
     background-color: transparent;
     border: 2px solid #3498db;
     color: #3498db;
-}
-
-.buttons a:nth-child(3):hover {
+  }
+  
+  .landing-buttons a.guest:hover {
     background-color: #3498db;
     color: white;
-}
-
-.footer {
-    position: absolute;
-    bottom: 10px;
-    margin-top: 40px;
-    font-size: 0.9em;
-    color: #aaa;
+  }
+  
+  footer {
     text-align: center;
-}
-
-/* Flash messages */
-#flash-message-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-}
-
-.flash-message {
-    padding: 15px 25px;
-    border-radius: 6px;
-    color: white;
-    font-size: 1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    animation: slideDown 0.4s ease-out, fadeOut 1s ease-in 1s forwards;
-    opacity: 0.95;
-}
-
-.flash-message.success {
-    background-color: #2ecc71;
-}
-
-.flash-message.info {
-    background-color: #f39c12;
-}
-
-.flash-message.danger {
-    background-color: #e74c3c;
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(-100%);
-        opacity: 0;
+    font-size: 0.9em;
+    color: #888;
+  }
+  
+  @media (max-width: 600px) {
+    .landing-container h1 {
+      font-size: 2.2em;
     }
-    to {
-        transform: translateY(0);
-        opacity: 0.95;
+  
+    .landing-container p {
+      font-size: 1em;
     }
-}
-
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-}
-
-/* responsive */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2.2em;
-    }
-
-    p {
-        font-size: 1em;
-    }
-
-    .buttons {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .buttons a {
-        width: 100%;
-        max-width: 280px;
-    }
-
-    .footer {
-        font-size: 0.8em;
-    }
-
-    #flash-message-container {
-        left: 20px;
-        right: 20px;
-        top: 10px;
-    }
-}
+  }
+  

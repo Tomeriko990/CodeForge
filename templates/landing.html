@@ -1,40 +1,22 @@
-<!DOCTYPE html>
-<html lang="he">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeForge</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% set hide_navbar = True %}
 
-<header>
-    <h1>Welcome to CodeForge</h1>
-    <p>Please sign in or register to continue</p>
-</header>
-<div class="buttons">
-    <div>
-        <a href="{{ url_for('login') }}">Sign In</a>
-        <a href="{{ url_for('register') }}">Sign Up</a>
+{% block title %}Welcome to CodeForge{% endblock %}
+
+{% block style %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+{% endblock %}
+
+{% block content %}
+  <div class="landing-container">
+    <h1>Welcome to <span>CodeForge</span></h1>
+    <p>Your online hub to practice, learn, and master your coding skills.</p>
+    <div class="landing-buttons">
+      <a class="signin" href="{{ url_for('login') }}">Sign In</a>
+      <a class="signup" href="{{ url_for('register') }}">Sign Up</a>
+      <a class="guest" href="{{ url_for('home') }}">Continue as Guest</a>
     </div>
-    <div>
-        <a href="{{ url_for('home') }}">Continue as Guest</a>
-    </div>
-</div>
-
-<div id="flash-message-container">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% set category, message = messages[0] %}
-            <div class="flash-message {{ category }}">
-                {{ message }}
-            </div>
-        {% endif %}
-    {% endwith %}
-</div>
-
-<footer class="footer">
-    <p>&copy; 2025 CodeForge – Practice, Learn, and Forge Your Coding Skills</p>
-</footer>
-</body>
-</html>
+    <footer>&copy;2025 CodeForge. All rights reserved.</footer>
+  </div>
+{% endblock %}

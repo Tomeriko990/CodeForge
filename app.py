@@ -31,7 +31,7 @@ def root():
 @login_required
 @app.route("/profile")
 def profile():
-    return render_template("profile.html")
+    return render_template("profile.html",user=current_user)
 
 @app.route("/landing")
 def landing():
@@ -92,6 +92,20 @@ def register():
             return redirect(url_for('register'))
 
     return render_template('register.html')
+
+#validation user
+@app.route('/validation',methods=['POST'])
+def validation():
+    
+    data=request.get_json()
+    username = data.get('username')
+
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        return jsonify({"exists":bool(existing_user) })  
+
+
+
 
 # Login
 @app.route('/login', methods=['GET', 'POST'])

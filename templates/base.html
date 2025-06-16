@@ -12,6 +12,7 @@
 </head>
 <body>
   <div id="layout-root">
+  {% if not hide_navbar %} 
     {% if current_user.is_authenticated %}
     <nav class="navbar">
       <ul>
@@ -32,7 +33,7 @@
       </ul>
     </nav>
     {% endif %}
-
+  {% endif %}
     <main id="page-content">
       {% block content %}{% endblock %}
     </main>
