@@ -11,7 +11,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: 100%;
   font-family:  Poppins,'Segoe UI',sans-serif;
   background: linear-gradient(to bottom, #1e1e1e, #2c2c2c);
   color: #f0f0f0;
@@ -39,7 +39,7 @@ html, body {
 
 .navbar ul {
   display: flex;
-  width: 100vh;
+  width: 100%;
   margin: 0 auto;
   gap: 40px;
   list-style: none;
@@ -88,4 +88,22 @@ footer {
   color: #aaa;
   padding: 10px 0;
 }
+
+@media (max-width: 768px) {
+  .navbar ul {
+    gap: 16px;
+    padding: 0 10px;
+  }
+
+  .navbar a {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+
+  #page-content {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+}
+
  
