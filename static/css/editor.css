@@ -99,6 +99,8 @@
 #explorer-header {
   background-color: #0e639c;
   padding: 15px;
+  width: 100%;
+  max-width:200px;
   text-align: center;
 }
 
