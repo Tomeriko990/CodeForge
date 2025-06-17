@@ -35,17 +35,17 @@ It also includes a built-in online **code editor** for live execution and testin
 ## 📸 Screenshots
 
 ### 🟢 Landing Page
-![Landing Page](static/assets/screenshots/landing.png)
+![Landing Page](static/assets/screenshots-codeForge/landing.png)
 
 ### 🏠 Home Page (Guest Mode)
-![Home Page](static/assets/screenshots/home.png)
+![Home Page](static/assets/screenshots-codeForge/home.png)
 
 ### 📚 Exercise Page
-![Exercises Page](static/assets/screenshots/exercises.png)
+![Exercises Page](static/assets/screenshots-codeForge/exercise.png)
 
 ### 🖊️ Online Code Editor (IDE)
-![IDE Page](static/assets/screenshots/editor.png)
+![IDE Page](static/assets/screenshots-codeForge/ide.png)
 
 ### 📝 Sign Up Page
-![Sign Up](static/assets/screenshots/signup.png)
+![Sign Up](static/assets/screenshots-codeForge/signup.png)
 
