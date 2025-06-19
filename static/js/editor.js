@@ -18,12 +18,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const fileInput = document.getElementById("hiddenFileInput");
 
+      const toggle = document.getElementById("sidebar-toggle");
       const explorerPanel = document.getElementById("explorer-container");
       const searchPanel = document.getElementById("panel-search");
       const terminal = document.getElementById("bottom-bar");
       const settingsModal = document.getElementById("settings-modal");
       const fileLoader=document.getElementById("fileLoader");
-  
+
+      if (toggle && explorerPanel) {
+        toggle.addEventListener("click", () => {
+          explorerPanel.classList.toggle("open");
+        });
+      }
+
       fileLoader.addEventListener("click", () => {
         fileInput.click(); 
       });

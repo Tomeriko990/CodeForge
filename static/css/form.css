@@ -104,6 +104,16 @@ form input::placeholder{
     padding: 0.5em;
     color: var(--text-color);
 }
+
+input.err {
+    border: 2px solid hsl(6, 95%, 47%); 
+    outline: none;
+  }
+
+div:has(input.err) >label{
+    background-color: #e74c3c; 
+    color: white;
+}
 form button {
     margin-top: 10px;
     border: none;
@@ -144,7 +154,7 @@ a:hover {
 #output {
     font-size: 0.9rem;
     margin-top: 5px;
-    color: #e67e22;
+    color: hsl(6, 95%, 47%);
     text-align: center;
 }
 

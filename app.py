@@ -99,10 +99,11 @@ def validation():
     
     data=request.get_json()
     username = data.get('username')
+    if not username:
+        return jsonify({"error": "Username not provided"}), 400
 
     existing_user = User.query.filter_by(username=username).first()
-    if existing_user:
-        return jsonify({"exists":bool(existing_user) })  
+    return jsonify({"exists": bool(existing_user)})
 
 
 
@@ -141,29 +142,30 @@ def logout():
 def run_code():
     data = request.get_json()
     code = data.get("code", "")
+    lang = data.get("language") or "python"
+    if lang == "python":
+        try:
+            parsed_code = ast.parse(code, mode='exec')
+            for node in ast.walk(parsed_code):
+                if isinstance(node, (ast.Import, ast.ImportFrom)):
+                    return jsonify({"output": "❌ Import statements are not allowed."})
+                if isinstance(node, ast.Call):
+                    func_name = getattr(node.func, 'id', '') or getattr(node.func, 'attr', '')
+                    if func_name in ["exec", "eval", "open", "compile", "input", "os", "subprocess"]:
+                        return jsonify({"output": f"❌ Function '{func_name}' is restricted."})
+        except Exception as e:
+            return jsonify({"output": f"AST parsing error: {e}"})
 
-    try:
-        parsed_code = ast.parse(code, mode='exec')
-        for node in ast.walk(parsed_code):
-            if isinstance(node, (ast.Import, ast.ImportFrom)):
-                return jsonify({"output": "❌ Import statements are not allowed."})
-            if isinstance(node, ast.Call):
-                func_name = getattr(node.func, 'id', '') or getattr(node.func, 'attr', '')
-                if func_name in ["exec", "eval", "open", "compile", "input", "os", "subprocess"]:
-                    return jsonify({"output": f"❌ Function '{func_name}' is restricted."})
-    except Exception as e:
-        return jsonify({"output": f"AST parsing error: {e}"})
+        output = io.StringIO()
+        try:
+            sys.stdout = output
+            exec(code, {})
+        except Exception as e:
+            print("Error:", e)
+        finally:
+            sys.stdout = sys.__stdout__
 
-    output = io.StringIO()
-    try:
-        sys.stdout = output
-        exec(code, {})
-    except Exception as e:
-        print("Error:", e)
-    finally:
-        sys.stdout = sys.__stdout__
-
-    return jsonify({"output": output.getvalue()})
+        return jsonify({"output": output.getvalue()})
 
 # Start server
 if __name__ == "__main__":

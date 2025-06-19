@@ -1,16 +1,15 @@
 /* ===== Base: Dark Mode ===== */
-body {
-  font-family: 'Segoe UI', sans-serif;
+/*body {
   background-color: #1e1e1e;
   color: #e0e0e0;
   margin: 0;
   padding: 0;
-}
+}*/
 
 #question-list {
   background-color: #252526;
   border-right: 1px solid #333;
-  height: 100vh;
+  height: 100%;
   overflow-y: auto;
   padding: 25px 20px;
 }
@@ -47,6 +46,15 @@ body {
   color: #e0e0e0;
   padding: 10px;
   line-height: 1.5;
+}
+
+#monaco-editor {
+  height: 350px;
+  border: 1px solid #3c3c3c;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #1e1e1e;
+  color: #e0e0e0;
 }
 
 #question-display {
@@ -108,9 +116,8 @@ body.light-mode .question-item.active {
   color: white;
 }
 
-body.light-mode .CodeMirror {
+body.light-mode #monaco-editor {
   background-color: #ffffff;
-  color: #212529;
   border-color: #6f869d;
 }
 
@@ -145,7 +152,13 @@ body.light-mode #result {
     max-width: 100%;
     padding: 16px;
   }
-
+  
+  #monaco-editor {
+    font-size: 15px;
+    height: 240px;
+    width: 100%;
+  }
+  
   .CodeMirror {
     font-size: 15px;
     height: 240px;

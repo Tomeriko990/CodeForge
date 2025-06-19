@@ -4,11 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0e639c">
+
+  <!-- Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon & manifest -->
   <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='assets/logo.png') }}">
   <link rel="icon" type="image/png" sizes="192x192"  href="{{ url_for('static', filename='assets/web-app-manifest-192x192.png') }}">
   <link rel="apple-touch-icon" href="{{ url_for('static', filename='assets/apple-touch-icon.png') }}">
-  
+
   <title>{% block title %}CodeForge{% endblock %}</title>
+
+  <!-- Base stylesheet -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
   {% block style %}{% endblock %}
   {% block head_scripts %}
@@ -21,6 +28,9 @@
     {% if current_user.is_authenticated %}
     <nav class="navbar">
       <ul>
+        <li class="mobile-only">
+          <button id="sidebar-toggle">☰</button>
+        </li>
         <li><a href="{{ url_for('home') }}" title="Home"><i data-lucide="home"></i>Home</a></li>
         <li><a href="{{ url_for('exercises') }}" title="Exercises"><i data-lucide="library-big"></i> Exercises</a></li>
         <li><a href="{{ url_for('editor') }}" title="Editor"><i data-lucide="terminal"></i> Editor</a></li>
