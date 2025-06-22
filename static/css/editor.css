@@ -1,34 +1,39 @@
-#ide-container {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
+/*---------Editor page-----------*/
 
+/*---------Side bar section-----------*/
 #sidebar {
   width: 60px;
   background-color: #2c2c2c;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 10px;
+  justify-content: space-between;
+  /* padding-top: 10px; */
+  /* gap: 40px; */
   border-right: 1px solid #1a1a1a;
 }
 
-#sidebar button {
-  background: none;
-  border: none;
-  color: #cccccc;
-  margin: 10px 0;
-  padding: 10px 0;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: background-color 0.2s, color 0.2s;
+#sidebar-btns {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  margin-top: 0.3rem;
+}
+
+#sidebar-btns button {
   width: 44px;
   height: 44px;
+  background-color: transparent;
+  border: none;
+  color: #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+  cursor: pointer;
 }
 
 #sidebar button:hover {
@@ -40,53 +45,86 @@
   background-color: #0e639c;
   color: white;
 }
+/*---------Side bar section-----------*/
 
 #main-area {
   flex: 1;
   display: flex;
   flex-direction: column;
+  background-color: white;
+  overflow: hidden;
+  min-width: 0;
   min-height: 0;
 }
 
 #toolbar {
   background-color: #333;
+  /* position: relative; */
   padding: 10px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 1rem;
   align-items: center;
   border-bottom: 1px solid #444;
+  color: white;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  min-width: 0;
 }
 
 #run-button {
+  position: fixed;
+  right: 0;
   background-color: #0e639c;
   border: none;
   color: white;
-  padding: 6px 14px;
+  text-align: center;
+  margin-right: 0.6rem;
+  padding: 0.3rem;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  transition: background-color 0.2s, ease-in-out 0.3s;
+  /* font-size: 14px; */
+}
+#sidebar-toggle {
+  display: none;
+  background-color: transparent;
+  color: white;
+  background-color: black;
+  text-align: center;
+  padding: 0.1rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s, transform 0.3s;
 }
 
-#run-button:hover {
-  background-color: #1177bb;
+#toolbar button:hover {
+  background-color: transparent;
+  border: 1px solid #0e639c;
 }
 
 #editor {
   flex: 1;
-  min-height: 0;
   background-color: #1e1e1e;
+  color: white;
+  padding-top: 5px;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
 }
 
 #bottom-bar {
   background-color: #1e1e1e;
   border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
   padding: 8px 10px;
-  font-size: 14px;
+  font-size: clamp(12px, 2vw, 14px);
+  height: clamp(100px, 25vh, 150px);
   color: #0f0;
   white-space: pre-wrap;
-  height: 150px;
+  /* height: 150px; */
   overflow-y: auto;
-  flex-shrink: 0;
 }
 
 #explorer-container {
@@ -94,14 +132,14 @@
   flex-direction: column;
   width: 15%;
   border-right: 1px solid #444;
+  background-color: #f5f5f5;
 }
 
 #explorer-header {
   background-color: #0e639c;
   padding: 15px;
-  width: 100%;
-  max-width:200px;
   text-align: center;
+  color: white;
 }
 
 #file-list {
@@ -117,53 +155,21 @@
   padding: 5px;
   border-radius: 4px;
   border: 1px solid red;
-  display: flex;
-  flex: 1;
+  background-color: white;
+  color: black;
 }
 
 .file-item:hover {
-  background-color: #2a2d2e;
+  background-color: #e2e2e2;
 }
+/*---------Editor page-----------*/
 
-/* כפתור ☰ */
-#sidebar-toggle {
-  background: none;
-  border: none;
-  color: #f0f0f0;
-  font-size: 22px;
-  cursor: pointer;
-  display: none;
-}
-
+/*---------mobile section-----------*/
 @media (max-width: 768px) {
+  #sidebar {
+    display: none;
+  }
   #sidebar-toggle {
     display: block;
   }
-
-  .navbar ul {
-    gap: 20px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
-
-  .mobile-only {
-    display: block;
-  }
-
-  #explorer-container {
-    display: none;
-    position: fixed;
-    top: 50px; /* מתחת ל-navbar */
-    left: 0;
-    width: 70%;
-    height: calc(100% - 50px);
-    background-color: #1e1e1e;
-    z-index: 999;
-    flex-direction: column;
-  }
-
-  #explorer-container.open {
-    display: flex;
-  }
 }
-

@@ -13,13 +13,14 @@
 {% endblock %}
 
 {% block content %}
-<div id="ide-container">
   <div id="sidebar">
-    <button title="Explorer" class="active"><i data-lucide="files"></i></button>
-    <button title="Search"><i data-lucide="search"></i></button>
-    <button title="Run" onclick="runCode()"><i data-lucide="play"></i></button>
-    <button title="Terminal"><i data-lucide="terminal"></i></button>
-    <button title="Settings"><i data-lucide="settings"></i></button>
+    <div id="sidebar-btns">
+      <button title="Explorer" class="active"><i data-lucide="files"></i></button>
+      <button title="Search"><i data-lucide="search"></i></button>
+      <button title="Run" onclick="runCode()"><i data-lucide="play"></i></button>
+      <button title="Terminal"><i data-lucide="terminal"></i></button>
+      <button title="Settings"><i data-lucide="settings"></i></button>
+    </div>
   </div>
 
   <div id="explorer-container">
@@ -34,7 +35,7 @@
   </div>
 
   <div id="main-area">
-    <div id="panel-search" class="side-panel">🔍 Search bar (coming soon...)</div>
+    <div id="panel-search" class="side-panel" style="display: none;">🔍 Search bar (coming soon...)</div>
     <div id="settings-modal" class="modal" style="display: none;">
       <div class="modal-content">
         <h3>⚙️ Settings</h3>
@@ -44,6 +45,7 @@
     </div>
 
     <div id="toolbar">
+      <button id="sidebar-toggle">☰</button>
       <span id="file-name">CodeForge</span>
       <button id="run-button" onclick="runCode()"><i data-lucide="play"></i></button>
     </div>
@@ -51,7 +53,7 @@
     <div id="editor"></div>
     <div id="bottom-bar">// Output will appear here...</div>
   </div>
-</div>
+
 {% endblock %}
 
 {% block script %}
