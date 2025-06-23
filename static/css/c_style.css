@@ -1,15 +1,32 @@
-/* ===== Base: Dark Mode ===== */
-/*body {
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  margin: 0;
-  padding: 0;
-}*/
+/* ===== Main container layout ===== */
+#main-cont {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  /*height: 100%;*/
+}
 
+/* ===== Close button position ===== */
+#close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.5rem;
+}
+
+/* ===== Sidebar panel (question list) ===== */
 #question-list {
+  position: relative;
   background-color: #252526;
   border-right: 1px solid #333;
   height: 100%;
+  flex: 1;
+  max-width: 50%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   padding: 25px 20px;
 }
@@ -37,17 +54,10 @@
   font-weight: bold;
 }
 
-.CodeMirror {
-  height: 350px;
-  border: 1px solid #3c3c3c;
-  border-radius: 5px;
-  font-size: 16px;
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  padding: 10px;
-  line-height: 1.5;
-}
+/* ===== CodeMirror fallback editor (if used) ===== */
 
+
+/* ===== Monaco editor styling ===== */
 #monaco-editor {
   height: 350px;
   border: 1px solid #3c3c3c;
@@ -55,17 +65,15 @@
   font-size: 16px;
   background-color: #1e1e1e;
   color: #e0e0e0;
+  flex: 1;
+  display: flex;
+  padding-top: 5px;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
 }
 
-#question-display {
-  font-size: 1.1rem;
-  background-color: #2d2d2d;
-  color: #ccc;
-  border: 1px solid #444;
-  padding: 10px;
-  border-radius: 5px;
-}
-
+/* ===== Output area styling ===== */
 #result {
   white-space: pre-wrap;
   color: #c7ffcc;
@@ -76,6 +84,7 @@
   font-family: Consolas, monospace;
 }
 
+/* ===== Primary button styling ===== */
 button.btn-primary {
   background-color: #007acc;
   border-color: #007acc;
@@ -90,15 +99,132 @@ button.btn-primary:hover {
   border-color: #005fa3;
 }
 
-/* ===== Light Mode Overrides ===== */
-body.light-mode {
+/* ===== Language + theme control layout ===== */
+#selecting-lan-mod-dis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+}
+
+/* ===== Selected question text display ===== */
+#question-display {
+  font-size: clamp(0.55rem, 1.5vw, 3rem);
+  display: flex;
+  background-color: #2d2d2d;
+  color: #ccc;
+  margin-left: 0.8rem;
+  border: 1px solid #444;
+  white-space: nowrap;
+  border-radius: 5px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* ===== Sidebar toggle button ===== */
+#sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(to bottom right, #2b2b2b, #1a1a1a);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0.5rem;
+}
+
+#sidebar-toggle:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to bottom right, #3a3a3a, #262626);
+}
+
+#sidebar-toggle i {
+  color: white;
+  stroke: white;
+  font-size: 1.2rem;
+}
+
+/* ===== Toggle language selector position ===== */
+#toggle-btn {
+  position: relative;
+  min-width: 0;
+  flex: 0 0 auto;
+}
+
+#language {
+  margin-left: 0.8rem;
+  max-width: 150px;
+  min-width: 0;
+  flex-shrink: 1;
+  margin-bottom: 1rem;
+}
+
+/* ===== Theme toggle switch ===== */
+.switch {
+  position: relative;
+  right: 0;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+  flex: 1;
+  min-width: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  inset: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 28px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #0e639c;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* ===== Light mode overrides ===== */
+body.light-mode #main-cont {
   background-color: #f8f9fa;
   color: #212529;
 }
 
+
 body.light-mode #question-list {
   background-color: #ffffff;
-  border-right: 1px solid #dee2e6;
+  border: 1px solid black !important;
 }
 
 body.light-mode .question-item {
@@ -133,41 +259,69 @@ body.light-mode #result {
   border-left: 4px solid #0d6efd;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .row {
-    flex-direction: column;
+body.light-mode #sidebar-toggle {
+  background: linear-gradient(to bottom right, #f1f1f1, #e0e0e0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode #sidebar-toggle i {
+  color: black !important;
+}
+
+body.light-mode label {
+  color: black !important;
+}
+
+/* ===== Responsive layout adjustments ===== */
+@media (max-width: 500px) {
+  .navbar {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    height: 60px !important;
+    z-index: 999;
+  }
+
+  #main-cont {
+    padding-bottom: 60px !important;
+  }
+
+  #page-content {
+    padding-bottom: 60px !important;
   }
 
   #question-list {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
     width: 100%;
-    height: auto;
-    padding: 16px;
+    height: calc(100% - 60px);
+    max-width: none;
     border-right: none;
     border-bottom: 1px solid #444;
   }
 
-  .col-md-5, .col-md-7, .col-lg-4, .col-lg-8 {
-    width: 100% !important;
-    max-width: 100%;
-    padding: 16px;
-  }
-  
   #monaco-editor {
     font-size: 15px;
     height: 240px;
     width: 100%;
   }
-  
-  .CodeMirror {
-    font-size: 15px;
-    height: 240px;
-    width: 100%;
+
+  #selecting-lan-mod-dis {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  #toggle-btn {
+    margin-top: 0.5rem;
   }
 
   #question-display {
-    font-size: 1rem;
-    margin-bottom: 16px;
+    margin-left: 0;
+    font-size: 0.95rem;
   }
 
   #result {
@@ -184,11 +338,16 @@ body.light-mode #result {
 
   .question-item {
     font-size: 0.95rem;
+    flex-wrap: wrap;
     padding: 10px 12px;
   }
 
   #theme-toggle {
     width: 100%;
     margin-bottom: 10px;
+  }
+
+  #sidebar-toggle {
+    display: block;
   }
 }

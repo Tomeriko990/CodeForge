@@ -1,4 +1,3 @@
-
 const questions = [
   "Write code that prints numbers from 1 to 10.",
   "Write a function that takes a list of numbers and returns their sum.",
@@ -7,20 +6,23 @@ const questions = [
   "Write a function that counts vowels in a string.",
   "Write a program that prints all prime numbers up to a given number N.",
   "Implement FizzBuzz from 1 to 100.",
-  "Check if a string is a palindrome (reads the same forward and backward)."
+  "Check if a string is a palindrome (reads the same forward and backward).",
 ];
-let runButton;  
+let runButton;
 let spinner;
+let questionsList;
 
-window.addEventListener("DOMContentLoaded",async () => {
-  
+window.addEventListener("DOMContentLoaded", async () => {
+  const sideBarBtn = document.getElementById("sidebar-toggle");
+
+  questionsList = document.getElementById("question-list");
   runButton = document.getElementById("run-code-btn");
   spinner = document.getElementById("spinner");
 
   runButton.disabled = false; // Enable button once editor is ready
 
   // Only after the editor is ready:
-  document.getElementById("language").addEventListener("change", e => {
+  document.getElementById("language").addEventListener("change", (e) => {
     setEditorLanguage(e.target.value);
   });
 
@@ -36,24 +38,30 @@ window.addEventListener("DOMContentLoaded",async () => {
   toggleBtn.addEventListener("click", () => {
     body.classList.toggle("light-mode");
     const isLight = body.classList.contains("light-mode");
+    const theme = isLight ? "vs" : "vs-dark";
+    setEditorTheme(theme);
     toggleBtn.textContent = isLight ? "🌙 Dark Mode" : "☀️ Light Mode";
     localStorage.setItem("theme", isLight ? "light" : "dark");
   });
+
+  // Quetions List Panel //
+  sideBarBtn.addEventListener("click", () => {
+    const isHidden = getComputedStyle(questionsList).display === "none";
+    questionsList.style.display = isHidden ? "block" : "none";
+  });
 });
-
-
+const closeQuestions = () => (questionsList.style.display = "none");
 
 async function runCode() {
-  const btntTxt=document.getElementById("run-text");
-  const output=document.getElementById("result");
+  const btntTxt = document.getElementById("run-text");
+  const output = document.getElementById("result");
 
   // Lock the button and show spinner
   runButton.disabled = true;
   output.style.display = "none";
   btntTxt.innerText = "Running...";
   spinner.classList.remove("d-none");
-  
-  
+
   try {
     const code = getEditorCode();
     const lang = getEditorLang();
@@ -61,7 +69,7 @@ async function runCode() {
     const response = await fetch("/run", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code, language: lang })
+      body: JSON.stringify({ code, language: lang }),
     });
 
     const result = await response.json();
@@ -74,21 +82,23 @@ async function runCode() {
 
       output.innerText = result.output;
       output.style.display = "block";
-    }, 500); 
-    
-
+    }, 500);
   } catch (error) {
     document.getElementById("result").innerText = `Error: ${error.message}`;
     document.getElementById("result").style.display = "block";
   }
 }
 
-
-
 function loadQuestion(index, element) {
   document.getElementById("question-display").innerText = questions[index];
-  if (window.editor) window.editor.setValue("");
-  document.querySelectorAll(".question-item").forEach(item => item.classList.remove("active"));
+  if (window.editor)
+    window.editor.setValue(
+      "Display: " + questions[index] + "\n//Write your Solution:\n"
+    );
+  document
+    .querySelectorAll(".question-item")
+    .forEach((item) => item.classList.remove("active"));
   element.classList.add("active");
   document.getElementById("result").style.display = "none";
+  closeQuestions();
 }

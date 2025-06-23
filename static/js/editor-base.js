@@ -1,9 +1,32 @@
 // Global variable to store the Monaco editor instance
 let editor;
-let pyrightInstance = null; // Will hold the Pyright type checker instance
+
+
+function getResponsiveFontSize() {
+  const vw = Math.max(
+    document.documentElement.clientWidth || 0,
+    window.innerWidth || 0
+  );
+  return Math.max(10, Math.min(16, vw * 0.014));
+}
+
+
+window.addEventListener("resize", () => {
+  if (editor) {
+    const fontSize = getResponsiveFontSize();
+    editor.updateOptions({ fontSize });
+    editor.layout();
+  }
+});
+
+
 
 // Configure Monaco loader path
-require.config({ paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs" } });
+require.config({
+  paths: {
+    vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.1/min/vs",
+  },
+});
 
 // Load Monaco editor
 require(["vs/editor/editor.main"], async function () {
@@ -13,40 +36,34 @@ require(["vs/editor/editor.main"], async function () {
     language: "python",
     theme: "vs-dark",
     automaticLayout: true,
-    fontSize: 16,
-    wordWrap: "on"
+    fontSize: getResponsiveFontSize(),
+    wordWrap: "on",
   });
+  console.log("hey");
+  window.editor = editor;
 
-  // Initialize Pyright for Python type checking and completions
-  await initPyright();
+  // Register intelligent completions for Python
+  fetch("/static/js/python-snippets.json")
+    .then((res) => res.json())
+    .then((snippets) => {
+      monaco.languages.registerCompletionItemProvider("python", {
+        provideCompletionItems: () => {
+          const suggestions = Object.entries(snippets).map(([key, val]) => ({
+            label: val.prefix,
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertText: val.body.join("\n"),
+            insertTextRules:
+              monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            documentation: val.description,
+          }));
+          return { suggestions };
+        },
+      });
+    });
 
-  // Register intelligent completions for Python using Pyright
-  monaco.languages.registerCompletionItemProvider("python", {
-    triggerCharacters: [".", "("],
-    provideCompletionItems: (model, position) => {
-      const code = model.getValue();
-      const offset = model.getOffsetAt(position);
-      pyrightInstance.setFile("main.py", code);
 
-      const completions = pyrightInstance.getCompletions("main.py", offset);
-      if (!completions || !completions.items) return { suggestions: [] };
 
-      const suggestions = completions.items.map(item => ({
-        label: item.label,
-        kind: monaco.languages.CompletionItemKind.Function,
-        insertText: item.insertText || item.label,
-        documentation: item.documentation,
-        range: {
-          startLineNumber: position.lineNumber,
-          endLineNumber: position.lineNumber,
-          startColumn: position.column - (item.textEdit?.range?.length || 0),
-          endColumn: position.column
-        }
-      }));
-
-      return { suggestions };
-    }
-  });
+      
 
   // Reinitialize Pyright if the language is changed back to Python
   editor.onDidChangeModelLanguage(async () => {
@@ -59,33 +76,6 @@ require(["vs/editor/editor.main"], async function () {
   // Listen for changes in the editor and update diagnostics
   editor.onDidChangeModelContent(onEditorContentChange);
 });
-
-// Initialize Pyright in the browser for real-time diagnostics
-async function initPyright() {
-  if (!window.createPyrightInBrowser || pyrightInstance) return;
-
-  pyrightInstance = await createPyrightInBrowser();
-  pyrightInstance.setFile("main.py", editor.getValue());
-  await onEditorContentChange();
-}
-
-// Update diagnostics in Monaco using Pyright results
-async function onEditorContentChange() {
-  if (!pyrightInstance) return;
-
-  const code = editor.getValue();
-  pyrightInstance.setFile("main.py", code);
-  const diagnostics = pyrightInstance.getDiagnostics("main.py");
-
-  monaco.editor.setModelMarkers(editor.getModel(), "pyright", diagnostics.map(diag => ({
-    message: diag.message,
-    severity: monaco.MarkerSeverity.Error,
-    startLineNumber: diag.range.start.line + 1,
-    startColumn: diag.range.start.character + 1,
-    endLineNumber: diag.range.end.line + 1,
-    endColumn: diag.range.end.character + 1
-  })));
-}
 
 // Get the code currently written in the editor
 function getEditorCode() {
@@ -103,3 +93,10 @@ function setEditorLanguage(lang) {
     monaco.editor.setModelLanguage(editor.getModel(), lang);
   }
 }
+
+// Set the theme of Monaco Editor
+const setEditorTheme = (theme) => {
+  if (editor) {
+    monaco.editor.setTheme(theme);
+  }
+};
